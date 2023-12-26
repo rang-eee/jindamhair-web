@@ -16,6 +16,7 @@ import models from "./plugins/models";
 // pages
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
+import PolicyDocument from "./pages/PolicyDocument";
 
 // components
 import ListItem from "./templates/ListItem";
@@ -45,22 +46,27 @@ import UserEditDialog from "./components/UserEditDialog";
 Vue.component(UserManager.name, UserManager);
 Vue.component(UserList.name, UserList);
 Vue.component(UserEditDialog.name, UserEditDialog);
+
 import DesignerManager from "./components/DesignerManager";
 import DesignerList from "./components/DesignerList";
 import DesignerEditDialog from "./components/DesignerEditDialog";
 Vue.component(DesignerManager.name, DesignerManager);
 Vue.component(DesignerList.name, DesignerList);
 Vue.component(DesignerEditDialog.name, DesignerEditDialog);
+
 import SelectReservationDialog from "./components/SelectReservationDialog";
 import SelectReservationList from "./components/SelectReservationList";
 Vue.component(SelectReservationDialog.name, SelectReservationDialog);
 Vue.component(SelectReservationList.name, SelectReservationList);
+
 import ReservationEditDialog from "./components/ReservationEditDialog";
 Vue.component(ReservationEditDialog.name, ReservationEditDialog);
+
 import MenuList from "./components/MenuList";
 import MenuEditDialog from "./components/MenuEditDialog";
 Vue.component(MenuList.name, MenuList);
 Vue.component(MenuEditDialog.name, MenuEditDialog);
+
 import StoreManager from "./components/StoreManager";
 import StoreList from "./components/StoreList";
 import StoreEditDialog from "./components/StoreEditDialog";
@@ -68,18 +74,20 @@ Vue.component(StoreManager.name, StoreManager);
 Vue.component(StoreList.name, StoreList);
 Vue.component(StoreEditDialog.name, StoreEditDialog);
 
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermService from "./pages/TermService";
-import ElectronicCommerce from "./pages/ElectronicCommerce";
+import PrivacyPolicy from "./components/policy/PrivacyPolicy";
+import TermService from "./components/policy/TermService";
+import ElectronicCommerce from "./components/policy/ElectronicCommerce";
+Vue.component(PrivacyPolicy.name, PrivacyPolicy);
+Vue.component(TermService.name, TermService);
+Vue.component(ElectronicCommerce.name, ElectronicCommerce);
 
 const router = new VueRouter({
 	mode: "history",
 	routes: [
 		{ path: "/", meta: { requireAuth: true }, component: HomePage },
 		{ path: "/Login", component: LoginPage },
-		{ path: "/privacyPolicy", meta: { noAuth: true }, component: PrivacyPolicy },
-		{ path: "/termService", meta: { noAuth: true }, component: TermService },
-		{ path: "/electronicCommerce", meta: { noAuth: true }, component: ElectronicCommerce },
+		{ path: "/policy/", meta: { noAuth: true }, component: PolicyDocument },
+		{ path: "/policy/:param", meta: { noAuth: true }, component: PolicyDocument },
 	],
 });
 
