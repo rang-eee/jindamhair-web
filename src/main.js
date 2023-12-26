@@ -72,31 +72,30 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermService from "./pages/TermService";
 import ElectronicCommerce from "./pages/ElectronicCommerce";
 
-const routes = [
-	{ path: "/", meta: { requireAuth: true }, component: HomePage },
-	{ path: "/Login", component: LoginPage },
-	{ path: "/privacyPolicy", component: PrivacyPolicy },
-	{ path: "/termService", component: TermService },
-	{ path: "/electronicCommerce", component: ElectronicCommerce },
-];
-
 const router = new VueRouter({
-	routes,
+	mode: "history",
+	routes: [
+		{ path: "/", meta: { requireAuth: true }, component: HomePage },
+		{ path: "/Login", component: LoginPage },
+		{ path: "/privacyPolicy", meta: { noAuth: true }, component: PrivacyPolicy },
+		{ path: "/termService", meta: { noAuth: true }, component: TermService },
+		{ path: "/electronicCommerce", meta: { noAuth: true }, component: ElectronicCommerce },
+	],
 });
 
 router.beforeEach((to, from, next) => {
-	console.log(">>>>>>>>> router", to, next);
-	if (to.matched.some((record) => record.meta.requireAuth)) {
+	// noAuth 경로 먼저 확인
+	if (to.matched.some((record) => record.meta.noAuth)) {
+		next();
+	} else if (to.matched.some((record) => record.meta.requireAuth)) {
 		firebase.auth().onAuthStateChanged(function (user) {
-			console.log(">>>>>>>>> user", user);
 			if (user) {
-				next({ path: "/" });
+				next();
 			} else {
 				next({ path: "/Login" });
 			}
 		});
 	} else {
-		console.log(">>>>>>>>>>>>>>>> else");
 		next();
 	}
 });
